@@ -11,8 +11,8 @@ import universaltools.DataProviderUtil;
 
 public class EmptyMessageTest extends BaseTest {
     @Test(dataProviderClass = DataProviderUtil.class, dataProvider = "testData")
-    public void checkEmptyMessage(String emptyCheck, String id, String statusCode) {
-        Steps.checkStatus(statusCode, Endpoints.POSTS.getStringValue() + id);
+    public void checkEmptyMessage(String emptyCheck, String id) {
+        Steps.checkNotFoundStatus(Endpoints.POSTS.getStringValue() + id);
         Steps.checkEmptyBody(emptyCheck, Endpoints.POSTS.getStringValue() + id);
     }
 }

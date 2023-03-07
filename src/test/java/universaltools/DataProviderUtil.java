@@ -3,7 +3,6 @@ package universaltools;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.testng.ITestContext;
 import org.testng.annotations.DataProvider;
@@ -19,7 +18,6 @@ import java.util.Set;
 @Slf4j
 public class DataProviderUtil {
     private JSONObject jsonTestObject = null;
-    private JSONArray jsonArray = null;
     private static String testFile = "test_file";
 
     @DataProvider(name = "testData")
@@ -27,6 +25,7 @@ public class DataProviderUtil {
         String testParam = context.getCurrentXmlTest().getParameter(testFile);
         jsonTestObject = ConfigUtil.setTestData(testParam);
         HashMap<String, String> hashMap = new HashMap<>();
+
         if (jsonTestObject != null) {
             Set<String> jsonObjKeys = jsonTestObject.keySet();
             for (String jsonObjKey: jsonObjKeys) {
@@ -38,6 +37,7 @@ public class DataProviderUtil {
         }
         String[] testData = hashMap.values().toArray(new String[hashMap.size()]);
         Object[][] data = new Object[1][testData.length];
+
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < testData.length; j++) {
                 data[i][j] = testData[j];
@@ -49,16 +49,7 @@ public class DataProviderUtil {
     @DataProvider(name = "userData")
     public Object[][] getUserData(ITestContext context) {
         String testParam = context.getCurrentXmlTest().getParameter(testFile);
-        jsonArray = ConfigUtil.getArrayOfData(testParam);
-        jsonTestObject = (JSONObject) jsonArray.get(0);
-//        JSONObject jUser = (JSONObject) jsonArray.get(1);
-//        HashMap<String, String> hashMap = new HashMap<>();
-//        Set<String> jsonObjKeys = jsonTestObject.keySet();
-//
-//        for (String jsonObjKey: jsonObjKeys) {
-//            hashMap.put(jsonObjKey, (String) jsonTestObject.get(jsonObjKey));
-//        }
-//        String[] testData = hashMap.values().toArray(new String[hashMap.size()]);
+        jsonTestObject = ConfigUtil.setTestData(testParam);
         String userString = jsonTestObject.toJSONString();
         ObjectMapper mapper = new ObjectMapper();
         User user = null;

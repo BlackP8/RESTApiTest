@@ -11,8 +11,8 @@ import universaltools.DataProviderUtil;
 
 public class CreateMessageTest extends BaseTest {
     @Test(dataProviderClass = DataProviderUtil.class, dataProvider = "testData")
-    public void postRequestTest(String userId, String statusCode) {
-        Steps.sendPostRequest(userId, Endpoints.POSTS.getStringValue(), statusCode);
+    public void postRequestTest(String userId) {
+        Steps.sendPostRequest(userId, Endpoints.POSTS.getStringValue());
         Steps.checkPostResponse();
     }
 }

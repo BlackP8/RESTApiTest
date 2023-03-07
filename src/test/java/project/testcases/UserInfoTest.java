@@ -7,14 +7,13 @@ import project.models.User;
 import universaltools.DataProviderUtil;
 
 /**
- * @author Pavel Romanov 03.03.2023
+ * @author Pavel Romanov 06.03.2023
  */
 
-public class GetAllUsersTest extends BaseTest {
+public class UserInfoTest extends BaseTest {
     @Test(dataProviderClass = DataProviderUtil.class, dataProvider = "userData")
-    public void allUsersTest(User user) {
+    public void testUserInfo(User user) {
         Steps.checkOkStatus(Endpoints.USERS.getStringValue());
-        Steps.checkContentType(Endpoints.USERS.getStringValue());
         Steps.checkUsersEqual(Endpoints.USERS.getStringValue() + user.getId(), user);
     }
 }

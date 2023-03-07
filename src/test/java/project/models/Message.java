@@ -12,8 +12,8 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 public class Message {
-    private int id;
-    private int userId;
+    private Integer id;
+    private Integer userId;
     private String title;
     private String body;
 }

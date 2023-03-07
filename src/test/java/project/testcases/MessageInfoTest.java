@@ -11,8 +11,8 @@ import universaltools.DataProviderUtil;
 
 public class MessageInfoTest extends BaseTest {
     @Test(dataProviderClass = DataProviderUtil.class, dataProvider = "testData")
-    public void attributesTest(String id, String userId, String statusCode) {
-        Steps.checkStatus(statusCode, Endpoints.POSTS.getStringValue() + id);
+    public void attributesTest(String id, String userId) {
+        Steps.checkOkStatus(Endpoints.POSTS.getStringValue() + id);
         Steps.checkMessageParams(userId, id, Endpoints.POSTS.getStringValue() + id);
     }
 }

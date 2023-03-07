@@ -6,7 +6,6 @@ package universaltools;
 
 public class DataGeneratorUtil {
     private static final int MIN_RANGE = 1;
-    private static final String numericString = "0123456789";
     private static final String LATIN_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvxyz";
 
     public static int generateRandomNumber(int max) {

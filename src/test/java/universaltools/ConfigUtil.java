@@ -44,18 +44,6 @@ public class ConfigUtil {
         }
     }
 
-    public static JSONArray getArrayOfData(String filePath) {
-        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            Object obj = parser.parse(reader);
-            jsonArray = (JSONArray) obj;
-            return jsonArray;
-        }
-        catch (IOException | ParseException e) {
-            log.error(e.getMessage());
-            return null;
-        }
-    }
-
     public static String getConfProperty(String key) {
         return (String) jsonConfObject.get(key);
     }
