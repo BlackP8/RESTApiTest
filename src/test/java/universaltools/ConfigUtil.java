@@ -1,7 +1,6 @@
 package universaltools;
 
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -20,7 +19,6 @@ public class ConfigUtil {
     private static JSONParser parser = new JSONParser();
     private static JSONObject jsonConfObject;
     private static JSONObject jsonTestObject;
-    private static JSONArray jsonArray;
 
     public static void setConfig() {
         try(BufferedReader reader = new BufferedReader(new FileReader(PATH_TO_CONFIG_FILE))) {
