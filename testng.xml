@@ -6,27 +6,27 @@
         <parameter name="test_file" value="src/test/resources/all_msg_testdata.json" />
         <parameter name="statusCode" value="200"/>
         <classes>
-            <class name = "project.testcases.GetAllMessagesTest"/>
+            <class name = "project.testcases.AllPostsSortedTest"/>
         </classes>
     </test>
     <test name = "Message info test">
         <parameter name="test_file" value="src/test/resources/msg_info_testdata.json" />
         <parameter name="statusCode" value="200"/>
         <classes>
-            <class name = "project.testcases.MessageInfoTest"/>
+            <class name = "project.testcases.PostInfoTest"/>
         </classes>
     </test>
-    <test name = "Empty message test">
+    <test name = "Empty post test">
         <parameter name="test_file" value="src/test/resources/empty_msg_testdata.json" />
         <parameter name="statusCode" value="404"/>
         <classes>
-            <class name = "project.testcases.EmptyMessageTest"/>
+            <class name = "project.testcases.EmptyPostTest"/>
         </classes>
     </test>
-    <test name = "Create message test">
+    <test name = "Create post test">
         <parameter name="test_file" value="src/test/resources/create_msg_testdata.json" />
         <classes>
-            <class name = "project.testcases.CreateMessageTest"/>
+            <class name = "project.testcases.CreatePostTest"/>
         </classes>
     </test>
     <test name = "All users test">

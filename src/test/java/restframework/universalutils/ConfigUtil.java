@@ -1,4 +1,4 @@
-package universaltools;
+package restframework.universalutils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
@@ -21,25 +21,21 @@ public class ConfigUtil {
     private static JSONObject jsonTestObject;
 
     public static void setConfig() {
-        try(BufferedReader reader = new BufferedReader(new FileReader(PATH_TO_CONFIG_FILE))) {
-            Object obj = parser.parse(reader);
-            jsonConfObject = (JSONObject) obj;
-        }
-        catch (IOException | ParseException e) {
-            log.error(e.getMessage());
-        }
+        jsonConfObject = setJSONObject(jsonConfObject, PATH_TO_CONFIG_FILE);
     }
 
     public static JSONObject setTestData(String filePath) {
-        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            Object obj = parser.parse(reader);
-            jsonTestObject = (JSONObject)obj;
-            return jsonTestObject;
+        return setJSONObject(jsonTestObject, filePath);
+    }
+
+    private static JSONObject setJSONObject(JSONObject object, String pathToFile) {
+        try(BufferedReader reader = new BufferedReader(new FileReader(pathToFile))) {
+            object = (JSONObject) parser.parse(reader);
         }
         catch (IOException | ParseException e) {
             log.error(e.getMessage());
-            return null;
         }
+        return object;
     }
 
     public static String getConfProperty(String key) {

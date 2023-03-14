@@ -5,8 +5,10 @@ package project.endpoints;
  */
 
 public enum Endpoints {
-    POSTS("/posts/"),
-    USERS("/users/");
+    ALL_POSTS("/posts/"),
+    POST_BY_ID("/posts/%s"),
+    USER_BY_ID("/users/%s"),
+    ALL_USERS("/users/");
 
     private final String value;
 

@@ -1,10 +1,12 @@
 package project.testcases;
 
+import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 import project.base.BaseTest;
 import project.endpoints.Endpoints;
 import project.models.User;
-import universaltools.DataProviderUtil;
+import project.testcases.steps.Steps;
+import restframework.universalutils.DataProviderUtil;
 
 /**
  * @author Pavel Romanov 06.03.2023
@@ -13,7 +15,7 @@ import universaltools.DataProviderUtil;
 public class UserInfoTest extends BaseTest {
     @Test(dataProviderClass = DataProviderUtil.class, dataProvider = "userData")
     public void testUserInfo(User user) {
-        Steps.checkOkStatus(Endpoints.USERS.getStringValue());
-        Steps.checkUsersEqual(Endpoints.USERS.getStringValue() + user.getId(), user);
+        String endpoint = String.format(Endpoints.USER_BY_ID.getStringValue(), user.getId());
+        Steps.checkUsersEqual(endpoint, user, HttpStatus.SC_OK);
     }
 }
