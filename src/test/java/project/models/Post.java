@@ -12,8 +12,8 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 public class Post {
-    private Integer id;
-    private Integer userId;
+    private String id;
+    private String userId;
     private String title;
     private String body;
 }

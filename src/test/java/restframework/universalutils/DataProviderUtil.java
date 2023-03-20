@@ -25,7 +25,6 @@ public class DataProviderUtil {
         String testParam = context.getCurrentXmlTest().getParameter(testFile);
         jsonTestObject = ConfigUtil.setTestData(testParam);
         HashMap<String, String> hashMap = new HashMap<>();
-
         if (jsonTestObject != null) {
             Set<String> jsonObjKeys = jsonTestObject.keySet();
             for (String jsonObjKey: jsonObjKeys) {
@@ -51,11 +50,9 @@ public class DataProviderUtil {
         String testParam = context.getCurrentXmlTest().getParameter(testFile);
         jsonTestObject = ConfigUtil.setTestData(testParam);
         String userString = jsonTestObject.toJSONString();
-        ObjectMapper mapper = new ObjectMapper();
         User user = null;
-
         try {
-            user = mapper.readValue(userString, User.class);
+            user = new ObjectMapper().readValue(userString, User.class);
         }
         catch (JsonProcessingException e) {
             log.error("Ошибка конвертации объекта JSON.");

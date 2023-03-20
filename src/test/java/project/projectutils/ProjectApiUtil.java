@@ -1,12 +1,11 @@
 package project.projectutils;
 
 import io.restassured.response.Response;
+import org.json.simple.JSONObject;
 import project.models.Post;
 import project.models.User;
 import restframework.FrameApiUtil;
-import restframework.universalutils.JsonUtil;
-import restframework.universalutils.SortUtil;
-import java.util.stream.Collectors;
+import java.util.List;
 
 /**
  * Класс-утилита для работы с результатами GET и POST запросов в рамках тест-кейсов задания
@@ -15,15 +14,15 @@ import java.util.stream.Collectors;
 
 public class ProjectApiUtil {
     /**
-     * Метод, проверяющий, что данные внутри тела ответа отсортированы по требуемому параметру
+     * Метод, возвращающий список объектов из тела запроса
      * @param url
-     * @param sortAttr
+     * @param expectedStatusCode
+     * @param type
      */
-    public static boolean isBodySorted(String url, String sortAttr, int expectedStatusCode) {
+    public static <T> List<T> getBodyAsList(String url, int expectedStatusCode, Class<T> type) {
         Response getResponse = FrameApiUtil.get(url);
         checkStatusCode(getResponse, expectedStatusCode);
-        return SortUtil.isResponseSorted(getResponse.jsonPath().getList(sortAttr).stream()
-                .map(Object::toString).collect(Collectors.toUnmodifiableList()));
+        return getResponse.jsonPath().getList("$", type);
     }
 
     /**
@@ -40,23 +39,23 @@ public class ProjectApiUtil {
     /**
      * Метод для получения поста из тела GET запроса
      * @param url
+     * @param expectedStatusCode
      */
     public static Post getPost(String url, int expectedStatusCode) {
         Response getResponse = FrameApiUtil.get(url);
-        Post post = getResponse.getBody().as(Post.class);
         checkStatusCode(getResponse, expectedStatusCode);
-        return post;
+        return getResponse.getBody().as(Post.class);
     }
 
     /**
      * Метод для получения пользователя из GET запроса
      * @param url
+     * @param expectedStatusCode
      */
     public static User getUser(String url, int expectedStatusCode) {
         Response getResponse = FrameApiUtil.get(url);
-        User user = getResponse.getBody().as(User.class);
         checkStatusCode(getResponse, expectedStatusCode);
-        return user;
+        return getResponse.getBody().as(User.class);
     }
 
     /**
@@ -65,11 +64,10 @@ public class ProjectApiUtil {
      * @param postToSend
      * @param expectedStatusCode
      */
-    public static Post getSentPost(String url, Post postToSend, int expectedStatusCode) {
-        Response postResponse = FrameApiUtil.post(url, JsonUtil.getJsonFromModel(postToSend));
-        Post actualPost = postResponse.getBody().as(Post.class);
+    public static Post getSentPost(String url, JSONObject postToSend, int expectedStatusCode) {
+        Response postResponse = FrameApiUtil.post(url, postToSend);
         checkStatusCode(postResponse, expectedStatusCode);
-        return actualPost;
+        return postResponse.getBody().as(Post.class);
     }
 
     /**

@@ -13,8 +13,8 @@ import restframework.universalutils.DataProviderUtil;
 
 public class AllPostsSortedTest extends BaseTest {
     @Test(dataProviderClass = DataProviderUtil.class, dataProvider = "testData")
-    public void testPosts(String sortAttr) {
+    public void testPosts() {
         Steps.checkJsonContentType(Endpoints.ALL_POSTS.getStringValue(), HttpStatus.SC_OK);
-        Steps.checkMessageBodySorted(sortAttr, Endpoints.ALL_POSTS.getStringValue(), HttpStatus.SC_OK);
+        Steps.checkMessageBodySorted(Endpoints.ALL_POSTS.getStringValue(), HttpStatus.SC_OK);
     }
 }

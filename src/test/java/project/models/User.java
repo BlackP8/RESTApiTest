@@ -10,7 +10,7 @@ import lombok.extern.jackson.Jacksonized;
 @Data
 @Jacksonized
 public class User {
-    private Integer id;
+    private String id;
     private String name;
     private String username;
     private String email;

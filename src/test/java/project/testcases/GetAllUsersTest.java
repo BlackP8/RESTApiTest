@@ -16,6 +16,6 @@ public class GetAllUsersTest extends BaseTest {
     @Test(dataProviderClass = DataProviderUtil.class, dataProvider = "userData")
     public void allUsersTest(User user) {
         Steps.checkJsonContentType(Endpoints.ALL_USERS.getStringValue(), HttpStatus.SC_OK);
-        Steps.checkUsersEqual(Endpoints.ALL_USERS.getStringValue() + user.getId(), user, HttpStatus.SC_OK);
+        Steps.checkUserFromList(Endpoints.ALL_USERS.getStringValue(), HttpStatus.SC_OK, user);
     }
 }

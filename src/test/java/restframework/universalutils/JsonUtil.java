@@ -14,9 +14,11 @@ import org.json.simple.parser.ParseException;
 
 @Slf4j
 public class JsonUtil {
+    private static final JSONParser PARSER = new JSONParser();
+
     public static boolean isContentTypeJson(String responseBody) {
         try {
-            JSONArray json = (JSONArray) new JSONParser().parse(responseBody);
+            JSONArray json = (JSONArray) PARSER.parse(responseBody);
             return true;
         }
         catch (ParseException e) {
@@ -27,8 +29,7 @@ public class JsonUtil {
     public static <T> JSONObject getJsonFromModel(T obj) {
         JSONObject json = null;
         try {
-            String jsonInString = new ObjectMapper().writeValueAsString(obj);
-            json = (JSONObject) new JSONParser().parse(jsonInString);
+            json = (JSONObject) PARSER.parse(new ObjectMapper().writeValueAsString(obj));
         }
         catch (JsonProcessingException | ParseException e) {
             log.error(e.getMessage());

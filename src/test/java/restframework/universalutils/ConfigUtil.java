@@ -16,7 +16,6 @@ import java.io.IOException;
 @Slf4j
 public class ConfigUtil {
     private static final String PATH_TO_CONFIG_FILE = "src/test/resources/config.json";
-    private static JSONParser parser = new JSONParser();
     private static JSONObject jsonConfObject;
     private static JSONObject jsonTestObject;
 
@@ -30,7 +29,7 @@ public class ConfigUtil {
 
     private static JSONObject setJSONObject(JSONObject object, String pathToFile) {
         try(BufferedReader reader = new BufferedReader(new FileReader(pathToFile))) {
-            object = (JSONObject) parser.parse(reader);
+            object = (JSONObject) new JSONParser().parse(reader);
         }
         catch (IOException | ParseException e) {
             log.error(e.getMessage());

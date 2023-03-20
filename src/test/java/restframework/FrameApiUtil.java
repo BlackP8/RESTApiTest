@@ -12,12 +12,13 @@ import org.json.simple.JSONObject;
 
 public class FrameApiUtil {
     private static final String CONTENT_TYPE_PARAM_NAME = "Content-Type";
+
     /**
      * Метод для выполнения GET запроса и получения результата
-     * @param baseURL
+     * @param url
      */
-    public static Response get(String baseURL) {
-        Response response = RestAssured.given().get(baseURL);
+    public static Response get(String url) {
+        Response response = RestAssured.given().get(url);
         return response;
     }
 
