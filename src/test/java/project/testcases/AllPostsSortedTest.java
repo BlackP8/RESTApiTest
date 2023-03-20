@@ -14,7 +14,7 @@ import restframework.universalutils.DataProviderUtil;
 public class AllPostsSortedTest extends BaseTest {
     @Test(dataProviderClass = DataProviderUtil.class, dataProvider = "testData")
     public void testPosts() {
-        Steps.checkJsonContentType(Endpoints.ALL_POSTS.getStringValue(), HttpStatus.SC_OK);
-        Steps.checkMessageBodySorted(Endpoints.ALL_POSTS.getStringValue(), HttpStatus.SC_OK);
+        Steps.checkJsonContentType(Steps.getResponseBody(Endpoints.ALL_POSTS.getStringValue(), HttpStatus.SC_OK));
+        Steps.checkMessageBodySorted(Steps.getListOfPostId(Endpoints.ALL_POSTS.getStringValue(), HttpStatus.SC_OK));
     }
 }

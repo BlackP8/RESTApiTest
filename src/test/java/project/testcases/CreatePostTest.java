@@ -21,6 +21,6 @@ public class CreatePostTest extends BaseTest {
                 .body(DataGeneratorUtil.generateRandomString(Integer.valueOf(stringLength))).build();
         Post actualPost = Steps.createPost(Endpoints.ALL_POSTS.getStringValue(), JsonUtil.getJsonFromModel(postToSend),
                 HttpStatus.SC_CREATED);
-        Steps.checkPostRequest(actualPost, postToSend);
+        Steps.checkPostParams(actualPost, postToSend);
     }
 }

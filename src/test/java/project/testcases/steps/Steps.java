@@ -9,6 +9,8 @@ import project.models.User;
 import restframework.universalutils.ConfigUtil;
 import restframework.universalutils.JsonUtil;
 import restframework.universalutils.SortUtil;
+
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -20,11 +22,14 @@ public class Steps {
     private static final String URL_PARAM_NAME = "url";
     private static final String url = ConfigUtil.getConfProperty(URL_PARAM_NAME);
 
-    public static void checkMessageBodySorted(String endPoint, int expectedStatusCode) {
-        log.info("Проверяем, что сообщения сортируются по возрастанию по id и код состояния запроса.");
-        Assert.assertTrue(SortUtil.isResponseSorted(ProjectApiUtil.getBodyAsList(url + endPoint, expectedStatusCode,
-                                Post.class).stream().map(Post::getId).collect(Collectors.toList())),
-                "Сообщения не отсортированы по возрастанию.");
+    public static void checkMessageBodySorted(List<String> listToCheck) {
+        log.info("Проверяем, что сортировку ответа и код состояния запроса.");
+        Assert.assertTrue(SortUtil.isResponseSorted(listToCheck), "Сообщения не отсортированы по возрастанию.");
+    }
+
+    public static List<String> getListOfPostId(String endPoint, int expectedStatusCode) {
+        return ProjectApiUtil.getBodyAsList(url + endPoint, expectedStatusCode,
+                Post.class).stream().map(Post::getId).collect(Collectors.toList());
     }
 
     public static void checkMessageParams(String userId, String id, Post post) {
@@ -38,19 +43,21 @@ public class Steps {
         return ProjectApiUtil.getPost(url + endPoint, expectedStatusCode);
     }
 
-    public static void checkEmptyBody(String emptyCheck, String endPoint, int expectedStatusCode) {
-        log.info("Проверяем, что тело ответа пустое и код состояния запроса.");
-        Assert.assertEquals(ProjectApiUtil.getStringBody(url + endPoint, expectedStatusCode), emptyCheck,
-                "Тело ответа не пустое");
+    public static void checkResponseBody(String body, String emptyCheck) {
+        log.info("Проверяем тело ответа и код состояния запроса.");
+        Assert.assertEquals(body, emptyCheck, "Тело ответа не пустое");
     }
 
-    public static void checkJsonContentType(String endPoint, int expectedStatusCode) {
-        log.info("Проверяем корректность типа списка в теле ответа.");
-        Assert.assertTrue(JsonUtil.isContentTypeJson(ProjectApiUtil.getStringBody(url + endPoint, expectedStatusCode)),
-                "Список в теле ответа неверного формата.");
+    public static void checkJsonContentType(String body) {
+        log.info("Проверяем, что тело ответа в формате JSON.");
+        Assert.assertTrue(JsonUtil.isContentTypeJson(body), "Список в теле ответа неверного формата.");
     }
 
-    public static void checkPostRequest(Post actualPost, Post postToSend) {
+    public static String getResponseBody(String endPoint, int expectedStatusCode) {
+        return ProjectApiUtil.getStringBody(url + endPoint, expectedStatusCode);
+    }
+
+    public static void checkPostParams(Post actualPost, Post postToSend) {
         log.info("Проверяем, что созданное сообщение соответствует нужным параметрам.");
         Assert.assertTrue(((!actualPost.getId().equals(null) && actualPost.getBody().equals(postToSend.getBody()))
                 && (actualPost.getTitle().equals(postToSend.getTitle())) &&
@@ -62,16 +69,19 @@ public class Steps {
         return ProjectApiUtil.getSentPost(url + endPoint, postToSend, expectedStatusCode);
     }
 
-    public static void checkUserFromList(String endPoint, int expectedStatusCode, User expectedUser) {
-        log.info("Проверяем корректность параметров пользователя из списка и код состояния запроса.");
-        Assert.assertEquals(ProjectApiUtil.getBodyAsList(url + endPoint, expectedStatusCode, User.class).stream()
-                .filter(el -> el.getId().equals(expectedUser.getId())).collect(Collectors.toList()).get(0), expectedUser,
-                "Ожидаемые и фактические пользовательские данные не совпадают.");
+    public static User getUserFromList(String endPoint, int expectedStatusCode, User expectedUser) {
+        log.info("Получаем пользователя из cписка пользователей.");
+        return ProjectApiUtil.getBodyAsList(url + endPoint, expectedStatusCode, User.class).stream()
+                .filter(el -> el.getId().equals(expectedUser.getId())).collect(Collectors.toList()).get(0);
     }
 
-    public static void checkUsersEqual(String endPoint, int expectedStatusCode, User expectedUser) {
+    public static User getActualUser(String endPoint, int expectedStatusCode) {
+        log.info("Получаем пользователя из запроса и код состояния запроса.");
+        return ProjectApiUtil.getUser(url + endPoint, expectedStatusCode);
+    }
+
+    public static void checkUsersEqual(User actualUser, User expectedUser) {
         log.info("Проверяем корректность параметров пользователя и код состояния запроса.");
-        Assert.assertEquals(ProjectApiUtil.getUser(url + endPoint, expectedStatusCode), expectedUser,
-                "Ожидаемые и фактические пользовательские данные не совпадают.");
+        Assert.assertEquals(actualUser, expectedUser, "Ожидаемые и фактические пользовательские данные не совпадают.");
     }
 }

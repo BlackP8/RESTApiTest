@@ -15,6 +15,6 @@ public class EmptyPostTest extends BaseTest {
     @Test(dataProviderClass = DataProviderUtil.class, dataProvider = "testData")
     public void checkEmptyMessage(String emptyCheck, String id) {
         String endpoint = String.format(Endpoints.POST_BY_ID.getStringValue(), id);
-        Steps.checkEmptyBody(emptyCheck, endpoint, HttpStatus.SC_NOT_FOUND);
+        Steps.checkResponseBody(Steps.getResponseBody(endpoint, HttpStatus.SC_NOT_FOUND), emptyCheck);
     }
 }

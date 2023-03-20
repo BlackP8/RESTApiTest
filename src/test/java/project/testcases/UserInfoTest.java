@@ -16,6 +16,7 @@ public class UserInfoTest extends BaseTest {
     @Test(dataProviderClass = DataProviderUtil.class, dataProvider = "userData")
     public void testUserInfo(User user) {
         String endpoint = String.format(Endpoints.USER_BY_ID.getStringValue(), user.getId());
-        Steps.checkUsersEqual(endpoint, HttpStatus.SC_OK, user);
+        User actualUser = Steps.getActualUser(endpoint, HttpStatus.SC_OK);
+        Steps.checkUsersEqual(actualUser, user);
     }
 }
